@@ -7,8 +7,11 @@ RUN apt-get update && apt-get install -y \
     git
 
 # RUN pip3 install PyYAML
-RUN python3 -m pip install --upgrade pip
-RUN pip install pyyaml
+
+# Added --break-system-packages flag to pip - Ubuntu now uses PEP 668 externally managed environments, 
+# which prevents pip from installing packages system-wide without this flag
+RUN python3 -m pip install --break-system-packages --upgrade pip
+RUN pip install --break-system-packages pyyaml
 
 COPY feed.py /usr/bin/feed.py
 
